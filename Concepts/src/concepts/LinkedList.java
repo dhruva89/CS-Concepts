@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 public class LinkedList<M> implements Iterable<M> {
 
 	public static class LinkedListIterator<O> implements Iterator<O> {
-		private Node<O> curNode;
+		private LinkedListNode<O> curNode;
 
 		public LinkedListIterator(LinkedList<O> linkedList) {
 			curNode = linkedList.head;
@@ -26,7 +26,7 @@ public class LinkedList<M> implements Iterable<M> {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			} else {
-				Node<O> temp = curNode;
+				LinkedListNode<O> temp = curNode;
 				curNode = curNode.next;
 				return temp.data;
 			}
@@ -35,20 +35,20 @@ public class LinkedList<M> implements Iterable<M> {
 
 	}
 
-	public Node<M> head;
-	public Node<M> tail;
+	public LinkedListNode<M> head;
+	public LinkedListNode<M> tail;
 
 	public LinkedList() {
 		super();
 	}
 
 	public LinkedList(M... inputs) {
-		Node<M> newNode = null;
-		Node<M> prev = null;
+		LinkedListNode<M> newNode = null;
+		LinkedListNode<M> prev = null;
 
 		this.head = newNode;
 		for (M data : inputs) {
-			newNode = new Node<M>();
+			newNode = new LinkedListNode<M>();
 			newNode.data = data;
 			if (prev != null) {
 				prev.next = newNode;
@@ -61,7 +61,7 @@ public class LinkedList<M> implements Iterable<M> {
 	}
 
 	public boolean add(M newData) {
-		Node<M> newNode = new Node<M>();
+		LinkedListNode<M> newNode = new LinkedListNode<M>();
 		newNode.data = newData;
 		if (head == null) {
 			head = newNode;

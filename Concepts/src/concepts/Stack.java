@@ -1,14 +1,14 @@
 package concepts;
 
 public class Stack<M extends Comparable<M>> {
-	public Node<M> top;
+	public LinkedListNode<M> top;
 
 	public Stack() {
 		top = null;
 	}
 
 	public boolean push(M data) {
-		Node<M> newNode = new Node<M>(data, top);
+		LinkedListNode<M> newNode = new LinkedListNode<M>(data, top);
 		top = newNode;
 		return true;
 	}
@@ -21,7 +21,7 @@ public class Stack<M extends Comparable<M>> {
 	}
 
 	public M pop() {
-		Node<M> node = top;
+		LinkedListNode<M> node = top;
 		top = top.next;
 		return node.data;
 	}

@@ -1,8 +1,8 @@
 package concepts;
 
 public class Queue<T> {
-	Node<T> head;
-	Node<T> tail;
+	LinkedListNode<T> head;
+	LinkedListNode<T> tail;
 
 	public Queue() {
 		head = null;
@@ -10,7 +10,7 @@ public class Queue<T> {
 	}
 
 	public boolean enqueue(T data) {
-		Node<T> newNode = new Node<T>(data, null);
+		LinkedListNode<T> newNode = new LinkedListNode<T>(data, null);
 		if (head != null) {
 			tail.next = newNode;
 			tail = newNode;
