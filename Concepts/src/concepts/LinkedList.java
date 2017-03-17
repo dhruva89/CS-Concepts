@@ -37,6 +37,7 @@ public class LinkedList<M> implements Iterable<M> {
 
 	public LinkedListNode<M> head;
 	public LinkedListNode<M> tail;
+	public int size = 0;
 
 	public LinkedList() {
 		super();
@@ -60,7 +61,7 @@ public class LinkedList<M> implements Iterable<M> {
 		this.tail = prev;
 	}
 
-	public boolean add(M newData) {
+	public LinkedList<M> add(M newData) {
 		LinkedListNode<M> newNode = new LinkedListNode<M>();
 		newNode.data = newData;
 		if (head == null) {
@@ -70,7 +71,8 @@ public class LinkedList<M> implements Iterable<M> {
 			tail.next = newNode;
 			tail = newNode;
 		}
-		return true;
+		size++;
+		return this;
 	}
 
 	@Override

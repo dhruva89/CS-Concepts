@@ -1,6 +1,11 @@
 package concepts;
 
 public class BST<T extends Comparable<T>> {
+
+	public BST(TreeNode<T> node) {
+		root = node;
+	}
+
 	public TreeNode<T> root = null;
 
 	public TreeNode<T> add(T data) {
@@ -73,7 +78,7 @@ public class BST<T extends Comparable<T>> {
 			}
 			return curNode;
 		} else {
-			while (curNode.parent!= null && curNode != curNode.parent.left) {
+			while (curNode.parent != null && curNode != curNode.parent.left) {
 				curNode = curNode.parent;
 			}
 			return curNode.parent;
@@ -89,7 +94,7 @@ public class BST<T extends Comparable<T>> {
 			return curNode;
 		}
 
-		while (curNode.parent!= null && curNode.parent.right != curNode) {
+		while (curNode.parent != null && curNode.parent.right != curNode) {
 			curNode = curNode.parent;
 		}
 		return curNode.parent;
@@ -104,6 +109,10 @@ public class BST<T extends Comparable<T>> {
 	public void inOrderTraversal() {
 		TreeNode<T> curNode = root;
 		recurseInOrder(curNode);
+	}
+
+	public static <M extends Comparable<M>> void inOrderTraversal(TreeNode<M> root) {
+		(new BST<M>(root)).inOrderTraversal();
 	}
 
 	private void recurseInOrder(TreeNode<T> node) {
