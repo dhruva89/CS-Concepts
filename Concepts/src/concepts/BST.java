@@ -6,6 +6,9 @@ public class BST<T extends Comparable<T>> {
 		root = node;
 	}
 
+	public BST() {
+	}
+
 	public TreeNode<T> root = null;
 
 	public TreeNode<T> add(T data) {
