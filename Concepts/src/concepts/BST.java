@@ -1,21 +1,23 @@
 package concepts;
 
+import java.util.ArrayList;
+
 public class BST<T extends Comparable<T>> {
 
-	public BST(TreeNode<T> node) {
+	public BST(BSTNode<T> node) {
 		root = node;
 	}
 
 	public BST() {
 	}
 
-	public TreeNode<T> root = null;
+	public BSTNode<T> root = null;
 
-	public TreeNode<T> add(T data) {
-		TreeNode<T> curNode = root;
-		TreeNode<T> prevNode = null;
+	public BSTNode<T> add(T data) {
+		BSTNode<T> curNode = root;
+		BSTNode<T> prevNode = null;
 		if (root == null) {
-			return root = new TreeNode<T>(data);
+			return root = new BSTNode<T>(data);
 		}
 		while (curNode != null) {
 			prevNode = curNode;
@@ -27,12 +29,12 @@ public class BST<T extends Comparable<T>> {
 		}
 
 		if (data.compareTo(prevNode.data) <= 0) {
-			prevNode.left = new TreeNode<T>(data);
+			prevNode.left = new BSTNode<T>(data);
 			prevNode.left.parent = prevNode;
 			return prevNode.left;
 
 		} else {
-			prevNode.right = new TreeNode<T>(data);
+			prevNode.right = new BSTNode<T>(data);
 			prevNode.right.parent = prevNode;
 			return prevNode.right;
 		}
@@ -40,7 +42,7 @@ public class BST<T extends Comparable<T>> {
 	}
 
 	public boolean remove(T data) {
-		TreeNode<T> curNode = root;
+		BSTNode<T> curNode = root;
 		while (curNode != null && curNode.data != data) {
 			if (data.compareTo(curNode.data) > 0) {
 				curNode = curNode.right;
@@ -58,7 +60,7 @@ public class BST<T extends Comparable<T>> {
 			replace(curNode, curNode.left);
 			return true;
 		} else if (curNode.left != null && curNode.right != null) {
-			TreeNode<T> successor = successor(curNode);
+			BSTNode<T> successor = successor(curNode);
 			curNode.data = successor.data;
 			successor.parent.right = successor.right;
 			return true;
@@ -73,7 +75,7 @@ public class BST<T extends Comparable<T>> {
 		}
 	}
 
-	public TreeNode<T> successor(TreeNode<T> curNode) {
+	public BSTNode<T> successor(BSTNode<T> curNode) {
 		if (curNode.right != null) {
 			curNode = curNode.right;
 			while (curNode.left != null) {
@@ -88,7 +90,7 @@ public class BST<T extends Comparable<T>> {
 		}
 	}
 
-	public TreeNode<T> predecessor(TreeNode<T> curNode) {
+	public BSTNode<T> predecessor(BSTNode<T> curNode) {
 		if (curNode.left != null) {
 			curNode = curNode.left;
 			while (curNode.right != null) {
@@ -103,22 +105,22 @@ public class BST<T extends Comparable<T>> {
 		return curNode.parent;
 	}
 
-	private void replace(TreeNode<T> curNode, TreeNode<T> node) {
+	private void replace(BSTNode<T> curNode, BSTNode<T> node) {
 		curNode.data = node.data;
 		curNode.left = node.left;
 		curNode.right = node.right;
 	}
 
 	public void inOrderTraversal() {
-		TreeNode<T> curNode = root;
+		BSTNode<T> curNode = root;
 		recurseInOrder(curNode);
 	}
 
-	public static <M extends Comparable<M>> void inOrderTraversal(TreeNode<M> root) {
+	public static <M extends Comparable<M>> void inOrderTraversal(BSTNode<M> root) {
 		(new BST<M>(root)).inOrderTraversal();
 	}
 
-	private void recurseInOrder(TreeNode<T> node) {
+	private void recurseInOrder(BSTNode<T> node) {
 		if (node != null) {
 			recurseInOrder(node.left);
 			System.out.println(node.data + " ");
@@ -127,34 +129,47 @@ public class BST<T extends Comparable<T>> {
 	}
 
 	public void preOrderTraversal() {
-		TreeNode<T> curNode = root;
-		recurseInOrder(curNode);
+		BSTNode<T> curNode = root;
+		recursePreOrder(curNode);
 	}
 
-	private void recursePreOrder(TreeNode<T> node) {
+	private void recursePreOrder(BSTNode<T> node) {
 		if (node != null) {
 			System.out.println(node.data + " ");
-			recurseInOrder(node.left);
-			recurseInOrder(node.right);
+			recursePreOrder(node.left);
+			recursePreOrder(node.right);
+		}
+	}
+
+	public void preOrderTraversalForArray(ArrayList<T> arrList) {
+		BSTNode<T> curNode = root;
+		recursePreOrder(curNode, arrList);
+	}
+
+	private void recursePreOrder(BSTNode<T> node, ArrayList<T> arrList) {
+		if (node != null) {
+			arrList.add(node.data);
+			recursePreOrder(node.left, arrList);
+			recursePreOrder(node.right, arrList);
 		}
 	}
 
 	public void postOrderTraversal() {
-		TreeNode<T> curNode = root;
-		recurseInOrder(curNode);
+		BSTNode<T> curNode = root;
+		recursePostOrder(curNode);
 	}
 
-	private void recursePostOrder(TreeNode<T> node) {
+	private void recursePostOrder(BSTNode<T> node) {
 		if (node != null) {
-			recurseInOrder(node.left);
-			recurseInOrder(node.right);
+			recursePostOrder(node.left);
+			recursePostOrder(node.right);
 			System.out.println(node.data + " ");
 		}
 	}
 
 	public void inOrderTraversalIterative() {
-		Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
-		TreeNode<T> curNode = root;
+		Stack<BSTNode<T>> stack = new Stack<BSTNode<T>>();
+		BSTNode<T> curNode = root;
 		while (curNode != null) {
 			stack.push(curNode);
 			curNode = curNode.left;
@@ -175,8 +190,8 @@ public class BST<T extends Comparable<T>> {
 	}
 
 	public void preOrderTraversalIterative() {
-		Queue<TreeNode<T>> queue = new Queue<TreeNode<T>>();
-		TreeNode<T> curNode = root;
+		Queue<BSTNode<T>> queue = new Queue<BSTNode<T>>();
+		BSTNode<T> curNode = root;
 
 		while (curNode != null) {
 			queue.enqueue(curNode);
@@ -197,18 +212,18 @@ public class BST<T extends Comparable<T>> {
 	}
 
 	public void postOrderTraversalIterative() {
-		Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
-		TreeNode<T> curNode = root;
+		Stack<BSTNode<T>> stack = new Stack<BSTNode<T>>();
+		BSTNode<T> curNode = root;
 
 		while (curNode != null) {
 			stack.push(curNode);
 			curNode = curNode.left;
 		}
 
-		TreeNode<T> prevNode2 = null;
+		BSTNode<T> prevNode2 = null;
 		while (!stack.isEmpty()) {
 			curNode = stack.peek();
-			TreeNode<T> prevNode = curNode;
+			BSTNode<T> prevNode = curNode;
 			if (curNode.right != null && prevNode2 != curNode.right) {
 				curNode = curNode.right;
 				stack.push(curNode);
@@ -220,6 +235,30 @@ public class BST<T extends Comparable<T>> {
 			if (prevNode == curNode) {
 				System.out.println((prevNode2 = stack.pop()).data);
 
+			}
+		}
+
+	}
+
+	public void morrisTraversal() {
+		BSTNode<T> cur = root;
+		while (cur != null) {
+			if (cur.left == null) {
+				System.out.println(cur);
+				cur = cur.right;
+			} else {
+				BSTNode<T> temp = cur.left;
+				while (temp.right != null && temp.right != cur) {
+					temp = temp.right;
+				}
+				if (temp.right == null) {
+					temp.right = cur;
+					cur = cur.left;
+				} else {
+					temp.right = null;
+					System.out.println(cur);
+					cur = cur.right;
+				}
 			}
 		}
 

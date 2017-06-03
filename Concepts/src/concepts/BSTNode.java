@@ -1,12 +1,12 @@
 package concepts;
 
-public class TreeNode<T extends Comparable<T>> implements Comparable<TreeNode<T>> {
+public class BSTNode<T extends Comparable<T>> implements Comparable<BSTNode<T>> {
 	public T data;
-	public TreeNode<T> left;
-	public TreeNode<T> right;
-	public TreeNode<T> parent;
+	public BSTNode<T> left;
+	public BSTNode<T> right;
+	public BSTNode<T> parent;
 
-	public TreeNode(T data) {
+	public BSTNode(T data) {
 		this.data = data;
 		this.left = null;
 		this.right = null;
@@ -19,7 +19,7 @@ public class TreeNode<T extends Comparable<T>> implements Comparable<TreeNode<T>
 	}
 
 	@Override
-	public int compareTo(TreeNode<T> o) {
+	public int compareTo(BSTNode<T> o) {
 		return data.compareTo(o.data);
 	}
 }
